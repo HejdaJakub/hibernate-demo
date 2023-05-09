@@ -19,7 +19,7 @@ public class HibernateDemoApplication {
 
 		User user = new User("John", "Doe", 25);
 		User user2 = new User("Carl", "Doe", 30);
-		User user3 = new User("Matt", "Johanson", 40);
+		User user3 = new User("Matt", "Johnson", 40);
 
 		controller.createUser(user);
 		controller.createUser(user2);
