@@ -1,7 +1,9 @@
 package com.example.hibernatedemo;
 
 import com.example.hibernatedemo.controller.UserController;
+import com.example.hibernatedemo.persistence.entity.Address;
 import com.example.hibernatedemo.persistence.entity.User;
+import com.example.hibernatedemo.persistence.repository.AddressRepository;
 import com.example.hibernatedemo.persistence.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +25,9 @@ public class UserControllerTests {
     
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     User user1;
     User user2;
@@ -77,5 +82,44 @@ public class UserControllerTests {
     public void testGetUserByFirstNameAndLastNameNotFound() {
         User foundUser = userController.getUserByFirstNameAndLastName("John", "Dooooe");
         assertNull(foundUser);
+    }
+
+    @Test
+    public void testFindUserByAddress() {
+        User user4 = new User("Jack", "Smith", 40);
+        Address address = new Address("Praha", "Dlouhá", "2955");
+        Address address2 = new Address("Brno", "Dlouhá", "2955");
+        Address address3 = new Address("Ostrava", "Dlouhá", "2955");
+        user4.setAddress(address);
+
+        userController.createUser(user4);
+
+        User user4FromDB = userController.getUserByFirstNameAndLastName("Jack", "Smith");
+
+        System.out.println(user4FromDB);
+        System.out.println(addressRepository.findAll());
+        System.out.println("Find user by address");
+        System.out.println(userRepository.findByAddress(address));
+
+        System.out.println("Find address by user");
+        System.out.println(addressRepository.findByUser(user4));
+    }
+
+    @Test
+    public void testFindUserByCityAndStreet() {
+        User user4 = new User("Jack", "Smith", 40);
+        Address address = new Address("Praha", "Dlouhá", "2955");
+        Address address2 = new Address("Brno", "Dlouhá", "2955");
+        Address address3 = new Address("Ostrava", "Dlouhá", "2955");
+        user4.setAddress(address);
+
+        userController.createUser(user4);
+
+        User user4FromDB = userController.getUserByFirstNameAndLastName("Jack", "Smith");
+
+        System.out.println(user4FromDB);
+        System.out.println("*** User by city and street ***");
+        System.out.println(userController.findByAddressCityAndAddressStreet("Praha", "Dlouhá"));
+        System.out.println(userController.findByAddressCityAndAddressStreet("Brno", "Dlouhá"));
     }
 }
