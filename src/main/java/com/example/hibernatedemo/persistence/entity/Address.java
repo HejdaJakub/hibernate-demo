@@ -28,6 +28,9 @@ public class Address {
     private String zipCode;
 
     // Unidirectional vs. Bidirectional Relationships (owning and referencing side)
+    // Unidirectional = only one entity has a relationship field or property that refers to the other
+    // Bidirectional = each entity has a relationship field or property that refers to the other entity
+    // hint: comment addressRepository - findByUser()
     @OneToOne(mappedBy = "address")
     private User user;
 
