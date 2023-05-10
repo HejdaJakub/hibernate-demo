@@ -36,4 +36,9 @@ public class UserController {
     public User getUserByFirstNameAndLastName(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
         return userService.findByFirstNameAndLastName(firstName, lastName);
     }
+
+    @GetMapping("/findByCityAndStreet")
+    public User findByAddressCityAndAddressStreet(@RequestParam("city") String city, @RequestParam("street") String street) {
+        return userService.findByAddressCityAndAddressStreet(city, street);
+    }
 }
