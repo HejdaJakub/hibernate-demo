@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -31,7 +33,11 @@ public class Address {
     // Unidirectional = only one entity has a relationship field or property that refers to the other
     // Bidirectional = each entity has a relationship field or property that refers to the other entity
     // hint: comment addressRepository - findByUser()
-    @OneToOne(mappedBy = "address")
+//    @OneToOne(mappedBy = "address")
+//    private User user;
+
+    @ManyToOne()
+    @JoinColumn(name = "fk_user_id")
     private User user;
 
     public Long getId() {

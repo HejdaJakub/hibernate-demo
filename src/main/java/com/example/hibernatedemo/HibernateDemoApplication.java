@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import javax.sound.midi.Soundbank;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -38,7 +38,15 @@ public class HibernateDemoApplication {
 		// Try second entity Address and its relations
 		User user4 = new User("Jack", "Smith", 40);
         Address address = new Address("Praha", "Dlouhá", "2955");
-		user4.setAddress(address);
+
+		// fix for @OneToMany
+		// user4.setAddress(address);
+		Address address2 = new Address("Brno", "Dlouhá", "2955");
+		List<Address> addresses = new ArrayList<>();
+		addresses.add(address);
+		addresses.add(address2);
+		user4.setAddresses(addresses);
+
 
 		userController.createUser(user4);
 

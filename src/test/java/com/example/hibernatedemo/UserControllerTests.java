@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -90,7 +92,10 @@ public class UserControllerTests {
         Address address = new Address("Praha", "Dlouhá", "2955");
         Address address2 = new Address("Brno", "Dlouhá", "2955");
         Address address3 = new Address("Ostrava", "Dlouhá", "2955");
-        user4.setAddress(address);
+
+        // fix for @OneToMany
+        // user4.setAddress(address);
+        user4.setAddresses(Collections.singletonList(address));
 
         userController.createUser(user4);
 
@@ -111,7 +116,15 @@ public class UserControllerTests {
         Address address = new Address("Praha", "Dlouhá", "2955");
         Address address2 = new Address("Brno", "Dlouhá", "2955");
         Address address3 = new Address("Ostrava", "Dlouhá", "2955");
-        user4.setAddress(address);
+
+        // fix for @OneToMany
+        // user4.setAddress(address);
+        user4.setAddresses(Collections.singletonList(address));
+
+//        List<Address> addresses = new ArrayList<>();
+//        addresses.add(address);
+//        addresses.add(address2);
+//        user4.setAddresses(addresses);
 
         userController.createUser(user4);
 
