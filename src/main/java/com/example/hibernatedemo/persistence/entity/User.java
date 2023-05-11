@@ -3,14 +3,15 @@ package com.example.hibernatedemo.persistence.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -38,9 +39,14 @@ public class User {
     @Column
     private int age;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_address_id")
-    private Address address;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "fk_address_id")
+//    private Address address;
+
+    // LazyInitializationException -> EAGER instead of LAZY = immediate load of data
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_user_id", referencedColumnName = "id")
+    private List<Address> addresses;
 
     public void setId(Long id) {
         this.id = id;
@@ -74,12 +80,12 @@ public class User {
         return age;
     }
 
-    public Address getAddress() {
-        return address;
+    public List<Address> getAddresses() {
+        return addresses;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 
     @Override
@@ -89,7 +95,7 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
-                ", address=" + (address == null ? "null" : address.toString()) +
+                ", address=" + (addresses == null ? "null" : addresses.toString()) +
                 '}';
     }
 }
